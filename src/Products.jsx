@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
-import Axios from 'axios';
 import { Button } from "@mui/material";
 
 function Products() {
     const [products, setProducts] = useState([])
+    const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
+        setLoading(true)
         loadData()
     }, [])
 
@@ -15,10 +16,12 @@ function Products() {
             .then((res) => res.json())
             .then((resData) => {
                 setProducts(resData)
+                setLoading(false)
             });
     }
 
     const deleteProduct = (id) => {
+        setLoading(true)
         fetch('https://northwind.vercel.app/api/products/' + id, { method: 'DELETE' })
             .then(res => {
                 if (res.ok === true) {
@@ -48,7 +51,7 @@ function Products() {
 
     return (
         <div style={{ height: '80vh', margin: '3%' }}>
-            <DataGrid rows={products} columns={columns}/>
+            <DataGrid loading={isLoading} rows={products} columns={columns}/>
         </div>
     )
 }
