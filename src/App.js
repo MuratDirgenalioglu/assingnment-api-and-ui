@@ -1,9 +1,9 @@
 import './App.css';
-import Products from './Products'
+import AppView from './AppView';
 
 function App() {
   return (
-    <Products />
+    <AppView />
   );
 }
 
